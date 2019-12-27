@@ -13,6 +13,8 @@
 #define LEDS_PER_METER 60
 #define LEDS_PER_REVOLUTION LEDS_PER_METER * WHEEL_CIRCUMFERENCE
 
+#define DISABLE_ANTI_STALL = true
+
 CRGB leds[NUM_LEDS];
 
 CRGB colors[NUM_COLORS] = {0xFF0000, 0xFFFF00, 0x00FF00, 0x00FFFF, 0x0000FF, 0xFF00FF};
@@ -75,7 +77,7 @@ int fade_in_fade_out (CRGB color, int led_idx) {
 
 void loop() {
   // anti-stall
-  if (micros() - last_interrupt_time > 1000000) {
+  if (!DISABLE_ANTI_STALL && micros() - last_interrupt_time > 1000000) {
     rps = 0.0;
   }
   
